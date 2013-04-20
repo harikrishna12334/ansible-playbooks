@@ -1,0 +1,11 @@
+- hosts: [ufw, minimal, test]
+
+  tasks:
+    - pacman: name=ufw state=installed
+
+    - template: src=../files/ufw-setup dest=/usr/local/bin/ufw-setup mode=755
+      notify: ufw-setup
+
+  handlers:
+    - name: ufw-setup
+      action: command /usr/local/bin/ufw-setup

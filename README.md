@@ -1,4 +1,4 @@
-# Krisoijn Chan's personal [Ansible] playbooks ([Arch Linux] centric)
+## Krisoijn Chan's personal [Ansible] playbooks ([Arch Linux] centric)
 
 ## Requirements
 
