@@ -1,0 +1,7 @@
+- hosts: [systemd, minimal, test]
+
+  tasks:
+    - pacman: name=systemd state=installed
+
+    - action: command hostnamectl set-hostname $hostname
+      only_if: "is_set('${hostname}')"
