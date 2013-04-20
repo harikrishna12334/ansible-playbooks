@@ -1,0 +1,9 @@
+- hosts: [php, lamp, test]
+
+  tasks:
+    - pacman: name=$item state=installed
+      with_items:
+        - php
+        - php-apache
+
+    - template: src=../files/php.ini dest=/etc/php/php.ini
