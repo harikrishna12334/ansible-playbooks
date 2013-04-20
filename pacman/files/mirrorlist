@@ -1,0 +1,2 @@
+Server = ftp://archlinux.mirrors.ovh.net/archlinux/$repo/os/$arch
+Server = http://archlinux.mirrors.ovh.net/archlinux/$repo/os/$arch

@@ -1,0 +1,8 @@
+- hosts: [pacman, archlinux, test]
+
+  tasks:
+    - template: src=../files/pacman.conf dest=/etc/pacman.conf
+    - template: src=../files/mirrorlist dest=/etc/pacman.d/mirrorlist
+
+    - pacman: name=pacman state=installed update_cache=yes
+    - pacman: name=yaourt state=installed
