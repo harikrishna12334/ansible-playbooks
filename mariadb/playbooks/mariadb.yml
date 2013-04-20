@@ -1,0 +1,13 @@
+- hosts: [mariadb, lamp]
+
+  tasks:
+    - pacman: name=$item state=installed
+      with_items:
+        - mariadb
+        - mysql-python
+
+    - service: name=mysqld state=started
+    - action: command systemctl enable mysqld
+
+    - mysql_user: name=root host=localhost password=$mysql_root_password
+    - template: src=../files/my.cnf dest=/root/.my.cnf owner=root mode=0600
