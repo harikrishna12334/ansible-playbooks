@@ -1,0 +1,11 @@
+- hosts: [lwt]
+
+  vars:
+    lwt_doc_root: /srv/http/$inventory_hostname/lwt
+
+  tasks:
+    - git: repo=https://github.com/lwt-project/lwt.git dest=$lwt_doc_root version=$lwt_version
+
+    - template: src=../files/connect.inc.php dest=$lwt_doc_root/connect.inc.php
+
+    - mysql_user: name=lwt password=$mysql_lwt_password priv=lwt.*:ALL state=present

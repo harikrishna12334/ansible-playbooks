@@ -1,0 +1,4 @@
+- hosts: [git]
+
+  tasks:
+    - pacman: name=git state=installed
