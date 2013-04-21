@@ -165,7 +165,7 @@ $CONFIG = array(
 */
 	array(
 		'path'=> '/home/owncloud/apps',
-		'url' => '/owncloud/apps',
+		'url' => '/apps',
 		'writable' => false,
 	),
 ),

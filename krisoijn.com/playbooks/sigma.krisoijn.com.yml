@@ -1,0 +1,6 @@
+- hosts: [sigma.krisoijn.com]
+
+  tasks:
+    - command: ln -sf /home/deluge/downloads /home/owncloud/data/$item/files/deluge
+      with_items:
+        - krisoijn
