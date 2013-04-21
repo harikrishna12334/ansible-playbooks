@@ -1,0 +1,9 @@
+- hosts: [cron, minimal, test]
+
+  tasks:
+    - template: src=$item dest=/tmp/crontab-root
+      first_available_file:
+        - ../../../files/cron/crontab-root
+        - ../files/crontab-root
+
+    - action: command crontab -u root /tmp/crontab-root

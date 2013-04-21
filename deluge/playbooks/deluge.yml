@@ -22,8 +22,9 @@
         - core.conf
         - web.conf
         - auth
-      notify: restart deluged
-      notify: restart deluge-web
+      notify:
+        - restart deluged
+        - restart deluge-web
 
     - service: name=deluged state=started
     - service: name=deluge-web state=started
