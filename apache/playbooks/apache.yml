@@ -1,0 +1,30 @@
+- hosts: [apache, lamp, test]
+
+  tasks:
+    - pacman: name=apache state=installed
+
+    - file: path=$item state=directory owner=http group=http mode=0700
+      with_items:
+        - /etc/httpd/conf/ssl
+        - /srv/http/$inventory_hostname
+        - /var/log/httpd/$inventory_hostname
+
+    - template: src=../../../files/apache/$item dest=/etc/httpd/conf/$item
+      with_items:
+        - htpasswd
+        - ssl/$inventory_hostname.crt
+        - ssl/$inventory_hostname-chain.crt
+        - ssl/$inventory_hostname-passwordless.key
+
+    - template: src=../files/$item dest=/etc/httpd/conf/$item
+      with_items:
+        - httpd.conf
+        - extra/httpd-ssl.conf
+      notify: restart apache
+
+    - service: name=httpd state=started
+    - action: command systemctl enable httpd
+
+  handlers:
+    - name: restart apache
+      action: command systemctl reload httpd
