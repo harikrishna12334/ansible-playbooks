@@ -1,0 +1,6 @@
+- hosts: [sudo, minimal, test]
+
+  tasks:
+    - pacman: name=sudo state=installed
+
+    - template: src=../files/sudoers dest=/etc/sudoers owner=root mode=0440
