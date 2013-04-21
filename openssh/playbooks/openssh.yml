@@ -1,0 +1,16 @@
+- hosts: [openssh, minimal, test]
+
+  tasks:
+    - pacman: name=openssh state=installed
+
+    - service: name=sshd state=started
+    - action: command systemctl enable sshd
+
+    - template: src=~/.ssh/id_rsa.pub dest=/root/.ssh/authorized_keys
+
+    - template: src=../files/sshd_config dest=/etc/ssh/sshd_config
+      notify: restart sshd
+
+  handlers:
+    - name: restart sshd
+      action: command systemctl restart sshd
