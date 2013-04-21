@@ -72,7 +72,7 @@ $CONFIG = array(
 "knowledgebaseurl" => "http://api.apps.owncloud.com/v1",
 
 /* Enable installing apps from the appstore */
-"appstoreenabled" => true,
+"appstoreenabled" => false,
 
 /* URL of the appstore to use, server should understand OCS */
 "appstoreurl" => "http://api.apps.owncloud.com/v1",
@@ -164,9 +164,9 @@ $CONFIG = array(
  You must have at least 1 app folder writable or you must set the parameter : appstoreenabled to false
 */
 	array(
-		'path'=> '/var/www/owncloud/apps',
-		'url' => '/apps',
-		'writable' => true,
+		'path'=> '/home/owncloud/apps',
+		'url' => '/owncloud/apps',
+		'writable' => false,
 	),
 ),
 'user_backends'=>array(
