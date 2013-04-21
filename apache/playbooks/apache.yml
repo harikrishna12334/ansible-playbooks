@@ -26,5 +26,4 @@
     - action: command systemctl enable httpd
 
   handlers:
-    - name: restart apache
-      action: command systemctl reload httpd
+    - include: ../handlers/apache.yml

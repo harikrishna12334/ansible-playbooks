@@ -1,0 +1,37 @@
+- hosts: [owncloud]
+
+  vars:
+    owncloud_doc_root: /home/owncloud
+
+  tasks:
+    - pacman: name=$item state=installed
+      with_items:
+        - php-gd
+        - php-intl
+
+    - git: repo=https://github.com/owncloud/core dest=$owncloud_doc_root version=$owncloud_version
+    - git: repo=https://github.com/owncloud/apps dest=$owncloud_doc_root/apps-git version=$owncloud_version
+    - git: repo=https://github.com/owncloud/3rdparty dest=$owncloud_doc_root/3rdparty version=$owncloud_version
+
+    - command: rsync -a $owncloud_doc_root/apps-git $owncloud_doc_root/apps
+
+    - file: path=$owncloud_doc_root state=directory owner=http group=http recurse=yes
+
+    - template: src=../files/autoconfig.php dest=$owncloud_doc_root/config/autoconfig.php
+
+    - command: rm $owncloud_doc_root/config/autoconfig.php removes=$owncloud_doc_root/config/config.php
+
+    - template: src=../files/config.php dest=$owncloud_doc_root/config/config.php
+
+    - mysql_user: name=owncloud password=$mysql_owncloud_password priv=owncloud.*:ALL state=present
+
+    - lineinfile: dest=/etc/httpd/conf/httpd.conf
+                  regexp="^Include /etc/httpd/conf/extra/httpd-owncloud.conf$"
+                  line="Include /etc/httpd/conf/extra/httpd-owncloud.conf" state=present
+      notify: restart apache
+
+    - template: src=../files/httpd-owncloud.conf dest=/etc/httpd/conf/extra/httpd-owncloud.conf
+      notify: restart apache
+
+  handlers:
+    - include: ../../apache/handlers/apache.yml
