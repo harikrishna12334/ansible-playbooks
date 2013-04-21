@@ -1,0 +1,13 @@
+- hosts: [vnstat]
+
+  vars:
+    vnstat_doc_root: /srv/http/$inventory_hostname/vnstat
+
+  tasks:
+    - pacman: name=vnstat state=installed
+
+    - service: name=vnstat state=started
+    - action: command systemctl enable vnstat
+
+    - git: repo=https://github.com/bjd/vnstat-php-frontend.git dest=$vnstat_doc_root version=$vnstat_php_frontend_version
+    - template: src=../files/config.php dest=$vnstat_doc_root/config.php
