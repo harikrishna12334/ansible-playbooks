@@ -1,0 +1,21 @@
+- hosts: [crashplan]
+
+  tasks:
+    - pacman: name=$item state=installed
+      with_items:
+        - java-runtime
+        - cpio
+
+    - shell: wget http://download.crashplan.com/installs/linux/install/CrashPlan/CrashPlan_${crashplan_version}_Linux.tgz -O /opt/CrashPlan_${crashplan_version}_Linux.tgz
+             creates=/opt/CrashPlan_${crashplan_version}_Linux.tgz
+
+    - shell: chdir=/opt tar xvzf CrashPlan_${crashplan_version}_Linux.tgz
+    - shell: chdir=/opt/CrashPlan-install cat CrashPlan_${crashplan_version}.cpi | gzip -d -c - | cpio -i --no-preserve-owner
+
+    - template: src=../files/crashplan.service dest=/usr/lib/systemd/system/crashplan.service
+    - template: src=../files/install.vars dest=/opt/CrashPlan-install/install.vars
+
+    - file: path=/opt/CrashPlan-install state=directory owner=root group=root recurse=yes
+
+    - service: name=crashplan state=started
+    - action: command systemctl enable crashplan
