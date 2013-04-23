@@ -11,3 +11,11 @@
 
     - git: repo=https://github.com/bjd/vnstat-php-frontend.git dest=$vnstat_doc_root version=$vnstat_php_frontend_version
     - template: src=../files/config.php dest=$vnstat_doc_root/config.php
+
+    - include: ../../apache/tasks/lif.yml line="Include conf/extra/httpd-vnstat.conf"
+
+    - template: src=../files/httpd-vnstat.conf dest=/etc/httpd/conf/extra/httpd-vnstat.conf
+      notify: restart apache
+
+  handlers:
+    - include: ../../apache/handlers/apache.yml
