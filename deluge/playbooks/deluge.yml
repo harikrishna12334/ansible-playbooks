@@ -32,8 +32,16 @@
     - action: command systemctl enable deluged
     - action: command systemctl enable deluge-web
 
+    - include: ../../apache/tasks/lif.yml line="Include conf/extra/httpd-deluge.conf"
+
+    - template: src=../files/httpd-deluge.conf dest=/etc/httpd/conf/extra/httpd-deluge.conf
+      notify: restart apache
+
   handlers:
+    - include: ../../apache/handlers/apache.yml
+
     - name: restart deluged
       action: command systemctl restart deluged
+
     - name: restart deluge-web
       action: command systemctl restart deluge-web
