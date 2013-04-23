@@ -9,3 +9,11 @@
     - template: src=../files/connect.inc.php dest=$lwt_doc_root/connect.inc.php
 
     - mysql_user: name=lwt password=$mysql_lwt_password priv=lwt.*:ALL state=present
+
+    - include: ../../apache/tasks/lif.yml line="Include conf/extra/httpd-lwt.conf"
+
+    - template: src=../files/httpd-lwt.conf dest=/etc/httpd/conf/extra/httpd-lwt.conf
+      notify: restart apache
+
+  handlers:
+    - include: ../../apache/handlers/apache.yml
