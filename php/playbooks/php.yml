@@ -7,3 +7,9 @@
         - php-apache
 
     - template: src=../files/php.ini dest=/etc/php/php.ini
+
+    - include: ../../apache/tasks/lif.yml line="LoadModule php5_module modules/libphp5.so"
+    - include: ../../apache/tasks/lif.yml line="Include conf/extra/php5_module.conf"
+
+  handlers:
+    - include: ../../apache/handlers/apache.yml

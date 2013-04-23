@@ -25,10 +25,7 @@
 
     - mysql_user: name=owncloud password=$mysql_owncloud_password priv=owncloud.*:ALL state=present
 
-    - lineinfile: dest=/etc/httpd/conf/httpd.conf
-                  regexp="^Include /etc/httpd/conf/extra/httpd-owncloud.conf$"
-                  line="Include /etc/httpd/conf/extra/httpd-owncloud.conf" state=present
-      notify: restart apache
+    - include: ../../apache/tasks/lif.yml line="Include conf/extra/httpd-owncloud.conf"
 
     - template: src=../files/httpd-owncloud.conf dest=/etc/httpd/conf/extra/httpd-owncloud.conf
       notify: restart apache

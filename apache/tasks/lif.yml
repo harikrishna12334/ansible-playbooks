@@ -1,0 +1,5 @@
+- lineinfile: dest=/etc/httpd/conf/httpd.conf
+              regexp="^${line}$"
+              line="${line}"
+              state=present
+  notify: restart apache
