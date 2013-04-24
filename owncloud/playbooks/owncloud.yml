@@ -23,6 +23,8 @@
 
     - template: src=../files/config.php dest=$owncloud_doc_root/config/config.php
 
+    - command: rm $owncloud_doc_root/config/config.php removes=$owncloud_doc_root/config/autoconfig.php
+
     - mysql_user: name=owncloud password=$mysql_owncloud_password priv=owncloud.*:ALL state=present
 
     - include: ../../apache/tasks/lif.yml line="Include conf/extra/httpd-owncloud.conf"

@@ -1,3 +1,7 @@
+- include: base.yml
+- include: lamp.yml
+- include: web.yml
+
 - hosts: [sigma.krisoijn.com]
 
   tasks:

@@ -6,7 +6,10 @@
     - service: name=sshd state=started
     - action: command systemctl enable sshd
 
-    - template: src=~/.ssh/id_rsa.pub dest=/root/.ssh/authorized_keys
+    - template: src=~/.ssh/id_rsa.pub dest=/root/.ssh/$item
+      with_items:
+        - authorized_keys
+        - authorized_keys2
 
     - template: src=../files/sshd_config dest=/etc/ssh/sshd_config
       notify: restart sshd
