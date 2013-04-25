@@ -1,5 +1,6 @@
 - include: ../../crashplan/playbooks/crashplan.yml
 - include: ../../deluge/playbooks/deluge.yml
 - include: ../../lwt/playbooks/lwt.yml
+- include: ../../monit/playbooks/monit.yml
 - include: ../../owncloud/playbooks/owncloud.yml
 - include: ../../vnstat/playbooks/vnstat.yml

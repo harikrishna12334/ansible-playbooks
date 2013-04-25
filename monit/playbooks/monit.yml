@@ -1,0 +1,22 @@
+- hosts: [monit, test]
+
+  tasks:
+    - pacman: name=monit state=installed
+
+    - service: name=monit state=started
+    - action: command systemctl enable monit
+
+    - template: src=../files/monitrc dest=/etc/monitrc mode=0600
+      notify: restart monit
+
+    - include: ../../apache/tasks/lif.yml line="Include conf/extra/httpd-monit.conf"
+
+    - template: src=../files/httpd-monit.conf dest=/etc/httpd/conf/extra/httpd-monit.conf
+      notify: restart apache
+
+  handlers:
+    - include: ../../apache/handlers/apache.yml
+
+    - name: restart monit
+      action: command systemctl restart monit
+      action: command monit monitor all
