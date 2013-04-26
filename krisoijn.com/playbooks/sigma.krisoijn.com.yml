@@ -8,3 +8,13 @@
     - command: ln -sf /home/deluge/downloads /home/owncloud/data/$item/files/deluge
       with_items:
         - krisoijn
+
+    - file: path=/home/public owner=root group=root state=directory mode=0775
+
+    - include: ../../apache/tasks/lif.yml line="Include conf/extra/httpd-public.conf"
+
+    - template: src=../files/httpd-public.conf dest=/etc/httpd/conf/extra/httpd-public.conf
+      notify: restart apache
+
+  handlers:
+    - include: ../../apache/handlers/apache.yml
