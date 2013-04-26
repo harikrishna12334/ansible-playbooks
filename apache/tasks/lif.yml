@@ -3,3 +3,4 @@
               line="${line}"
               state=present
   notify: restart apache
+  tags: [ httpd.conf ]

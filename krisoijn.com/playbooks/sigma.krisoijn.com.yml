@@ -15,6 +15,7 @@
 
     - template: src=../files/httpd-public.conf dest=/etc/httpd/conf/extra/httpd-public.conf
       notify: restart apache
+      tags: [ httpd.conf ]
 
   handlers:
     - include: ../../apache/handlers/apache.yml

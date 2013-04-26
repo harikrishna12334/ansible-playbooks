@@ -37,6 +37,7 @@
         - httpd.conf
         - extra/httpd-ssl.conf
       notify: restart apache
+      tags: [ httpd.conf ]
 
     - service: name=httpd state=started
     - action: command systemctl enable httpd

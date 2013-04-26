@@ -16,6 +16,7 @@
 
     - template: src=../files/httpd-vnstat.conf dest=/etc/httpd/conf/extra/httpd-vnstat.conf
       notify: restart apache
+      tags: [ httpd.conf ]
 
   handlers:
     - include: ../../apache/handlers/apache.yml

@@ -36,6 +36,7 @@
 
     - template: src=../files/httpd-deluge.conf dest=/etc/httpd/conf/extra/httpd-deluge.conf
       notify: restart apache
+      tags: [ httpd.conf ]
 
   handlers:
     - include: ../../apache/handlers/apache.yml

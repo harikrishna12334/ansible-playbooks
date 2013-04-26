@@ -13,6 +13,7 @@
 
     - template: src=../files/httpd-monit.conf dest=/etc/httpd/conf/extra/httpd-monit.conf
       notify: restart apache
+      tags: [ httpd.conf ]
 
   handlers:
     - include: ../../apache/handlers/apache.yml
