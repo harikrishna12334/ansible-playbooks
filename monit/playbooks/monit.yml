@@ -21,3 +21,4 @@
     - name: restart monit
       action: command systemctl restart monit
       action: command monit monitor all
+      ignore_errors: yes

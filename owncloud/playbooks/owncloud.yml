@@ -8,6 +8,7 @@
       with_items:
         - php-gd
         - php-intl
+        - rsync
 
     - git: repo=https://github.com/owncloud/core dest=$owncloud_doc_root version=$owncloud_version
     - git: repo=https://github.com/owncloud/apps dest=$owncloud_doc_root/apps-git version=$owncloud_version
@@ -20,6 +21,11 @@
     - template: src=../files/autoconfig.php dest=$owncloud_doc_root/config/autoconfig.php
 
     - command: rm $owncloud_doc_root/config/autoconfig.php removes=$owncloud_doc_root/config/config.php
+
+    - name: retrieve passwordsalt from server side config.php
+      shell: grep \'passwordsalt\' $owncloud_doc_root/config/config.php | sed -e "s/',.*//g" -e "s/.*'//g"
+             removes=$owncloud_doc_root/config/config.php
+      register: owncloud_passwordsalt
 
     - template: src=../files/config.php dest=$owncloud_doc_root/config/config.php
 

@@ -27,7 +27,7 @@ $CONFIG = array(
 "dbtableprefix" => "",
 
 /* Define the salt used to hash the user passwords. All your user passwords are lost if you lose this string. */
-"passwordsalt" => "{{owncloud_passwordsalt}}",
+"passwordsalt" => "{{owncloud_passwordsalt.stdout}}",
 
 /* Force use of HTTPS connection (true = use HTTPS) */
 "forcessl" => false,
