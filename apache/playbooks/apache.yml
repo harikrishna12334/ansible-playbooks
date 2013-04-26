@@ -1,5 +1,8 @@
 - hosts: [apache, lamp, test]
 
+  vars:
+    pf: ../../../files # private files
+
   tasks:
     - pacman: name=apache state=installed
 
@@ -9,12 +12,25 @@
         - /srv/http/$inventory_hostname
         - /var/log/httpd/$inventory_hostname
 
-    - template: src=../../../files/apache/$item dest=/etc/httpd/conf/$item
-      with_items:
-        - htpasswd
-        - ssl/$inventory_hostname.crt
-        - ssl/$inventory_hostname-chain.crt
-        - ssl/$inventory_hostname-passwordless.key
+    - template: src=$item dest=/etc/httpd/conf/htpasswd
+      first_available_file:
+        - $pf/apache/htpasswd-$inventory_hostname
+        - $pf/apache/htpasswd-default
+
+    - template: src=$item dest=/etc/httpd/conf/ssl/server.crt
+      first_available_file:
+        - $pf/apache/ssl/$inventory_hostname.crt
+        - $pf/apache/ssl/default.crt
+
+    - template: src=$item dest=/etc/httpd/conf/ssl/server-chain.crt
+      first_available_file:
+        - $pf/apache/ssl/$inventory_hostname-chain.crt
+        - $pf/apache/ssl/default-chain.crt
+
+    - template: src=$item dest=/etc/httpd/conf/ssl/server-passwordless.key
+      first_available_file:
+        - $pf/apache/ssl/$inventory_hostname-passwordless.key
+        - $pf/apache/ssl/default-passwordless.key
 
     - template: src=../files/$item dest=/etc/httpd/conf/$item
       with_items:
