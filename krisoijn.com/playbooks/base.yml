@@ -1,4 +1,4 @@
-- include: ../../cron/playbooks/cron.yml
+- include: ../../cronie/playbooks/cronie.yml
 - include: ../../git/playbooks/git.yml
 - include: ../../gitolite/playbooks/gitolite.yml
 - include: ../../openssh/playbooks/openssh.yml

@@ -1,0 +1,16 @@
+- hosts: [cronie, minimal, test]
+
+  tasks:
+    - pacman: name=cronie state=installed
+
+    - template: src=$item dest=/tmp/crontab-root mode=0600
+      first_available_file:
+        - ../../../files/cron/crontab-root-$inventory_hostname
+        - ../../../files/cron/crontab-root-default
+        - ../files/crontab-root-$inventory_hostname
+        - ../files/crontab-root-default
+
+    - action: command crontab -u root /tmp/crontab-root
+
+    - service: name=cronie state=started
+    - action: command systemctl enable cronie
