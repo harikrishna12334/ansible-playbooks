@@ -15,6 +15,14 @@
       notify: restart apache
       tags: [ httpd.conf ]
 
+    - file: path=/etc/monit.d state=directory owner=root group=root mode=0700
+
+    - template: src=$item dest=/etc/monit.d/monit-extra.conf
+      first_available_file:
+        - ../files/monit.d/monit-extra.conf-$inventory_hostname
+        - ../files/monit.d/monit-extra.conf-default
+      notify: restart monit
+
   handlers:
     - include: ../../apache/handlers/apache.yml
 

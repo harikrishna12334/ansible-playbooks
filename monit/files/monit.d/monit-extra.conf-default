@@ -1,0 +1,23 @@
+check process crashplan with pidfile /opt/CrashPlan-install/CrashPlanEngine.pid
+    start program = "/usr/bin/systemctl start crashplan"
+    stop program  = "/usr/bin/systemctl stop crashplan"
+
+check process cronie with pidfile /run/crond.pid
+    start program = "/usr/bin/systemctl start cronie"
+    stop program  = "/usr/bin/systemctl stop cronie"
+
+check process deluged with pidfile /home/deluge/.config/deluge/deluged.pid
+    start program = "/usr/bin/systemctl start deluged"
+    stop program  = "/usr/bin/systemctl stop deluged"
+
+check process httpd with pidfile /run/httpd/httpd.pid
+    start program = "/usr/bin/systemctl start httpd"
+    stop program  = "/usr/bin/systemctl stop httpd"
+
+check process monit with pidfile /run/monit.pid
+    start program = "/usr/bin/systemctl start monit"
+    stop program  = "/usr/bin/systemctl stop monit"
+
+check process mysqld with pidfile /run/mysqld/mysqld.pid
+    start program = "/usr/bin/systemctl start mysqld"
+    stop program  = "/usr/bin/systemctl stop mysqld"
