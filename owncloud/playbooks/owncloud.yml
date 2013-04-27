@@ -23,7 +23,7 @@
     - command: rm $owncloud_doc_root/config/autoconfig.php removes=$owncloud_doc_root/config/config.php
 
     - name: retrieve passwordsalt from server side config.php
-      shell: grep \'passwordsalt\' $owncloud_doc_root/config/config.php | sed -e "s/',.*//g" -e "s/.*'//g"
+      shell: grep [\"\']passwordsalt[\"\'] $owncloud_doc_root/config/config.php | sed -e "s/[\"\'],.*//g" -e "s/.*[\"\']//g"
              removes=$owncloud_doc_root/config/config.php
       register: owncloud_passwordsalt
 
