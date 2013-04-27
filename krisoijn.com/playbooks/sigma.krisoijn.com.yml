@@ -5,10 +5,6 @@
 - hosts: [sigma.krisoijn.com]
 
   tasks:
-    - file: path=/home/owncloud/data/$item/files owner=http group=http state=directory mode=0775
-      with_items:
-        - krisoijn
-
     - command: ln -sf /home/deluge/downloads /home/owncloud/data/$item/files/
       with_items:
         - krisoijn
