@@ -16,6 +16,7 @@
 
     - command: rsync -a $owncloud_doc_root/apps-git/ $owncloud_doc_root/apps
 
+    - file: path=$owncloud_doc_root/data state=directory owner=http group=http mode=0770
     - file: path=$owncloud_doc_root/data/${owncloud_adminlogin}/files state=directory owner=http group=http mode=0770
     - file: path=$owncloud_doc_root state=directory owner=http group=http recurse=yes
 
