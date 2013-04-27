@@ -28,8 +28,7 @@
       register: owncloud_passwordsalt
 
     - template: src=../files/config.php dest=$owncloud_doc_root/config/config.php
-
-    - command: rm $owncloud_doc_root/config/config.php removes=$owncloud_doc_root/config/autoconfig.php
+      only_if: "is_set('${owncloud_passwordsalt}')"
 
     - mysql_user: name=owncloud password=$mysql_owncloud_password priv=owncloud.*:ALL state=present
 
