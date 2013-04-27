@@ -1,0 +1,11 @@
+- hosts: [msmtp, minimal, test]
+
+  tasks:
+    - pacman: name=$item state=installed
+      with_items:
+        - msmtp
+        - msmtp-mta
+        - heirloom-mailx
+
+    - template: src=../files/msmtprc dest=/etc/msmtprc owner=root group=root mode=0600
+    - template: src=../files/aliases dest=/etc/aliases owner=root group=root mode=0600
