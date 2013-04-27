@@ -36,6 +36,7 @@
       with_items:
         - httpd.conf
         - extra/httpd-ssl.conf
+        - extra/httpd-autoindex.conf
       notify: restart apache
       tags: [ httpd.conf ]
 
