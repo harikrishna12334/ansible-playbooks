@@ -5,6 +5,9 @@
 - hosts: [sigma.krisoijn.com]
 
   tasks:
+    - command: ln -sf /opt/CrashPlan-install/log /home/owncloud/data/krisoijn/files/crashplan-log
+               creates=/home/owncloud/data/krisoijn/files/crashplan-log
+
     - command: ln -sf /home/deluge/downloads /home/owncloud/data/$item/files/
       with_items:
         - krisoijn
