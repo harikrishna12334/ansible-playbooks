@@ -1,5 +1,6 @@
 - include: ../../cron/playbooks/cron.yml
 - include: ../../git/playbooks/git.yml
+- include: ../../gitolite/playbooks/gitolite.yml
 - include: ../../openssh/playbooks/openssh.yml
 - include: ../../pacman/playbooks/pacman.yml
 - include: ../../sudo/playbooks/sudo.yml

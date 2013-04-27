@@ -1,0 +1,13 @@
+- hosts: [gitolite]
+
+  tasks:
+    - git: repo=https://github.com/sitaramc/gitolite.git dest=/home/git/gitolite version=$gitolite_version
+
+    - shell: /home/git/gitolite/install -ln /usr/local/bin
+
+    - template: src=~/.ssh/id_rsa.pub dest=/home/git/.ssh/gitolite-admin.pub
+
+    - shell: /home/git/gitolite/src/gitolite setup -pk /home/git/.ssh/gitolite-admin.pub
+             creates=/home/git/.gitolite/keydir/gitolite-admin.pub
+      sudo_user: git
+      sudo: true
