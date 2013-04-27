@@ -47,7 +47,9 @@ set logfile /var/log/monit.log
 # will use the second mail server in the list and so on. By default Monit uses 
 # port 25 - it is possible to override this with the PORT option.
 #
-# set mailserver mail.bar.baz,               # primary mailserver
+set mailserver
+    smtp.gmail.com port 587 username {{monit_mail_user}} password {{monit_mail_password}} using tlsv1
+    with timeout 30 seconds
 #                backup.bar.baz port 10025,  # backup mailserver on port 10025
 #                localhost                   # fallback relay
 #
@@ -59,9 +61,9 @@ set logfile /var/log/monit.log
 ## size using the SLOTS option (if omitted, the queue is limited by space 
 ## available in the back end filesystem).
 #
-# set eventqueue
-#     basedir /var/monit  # set the base directory where events will be stored
-#     slots 100           # optionally limit the queue size
+set eventqueue
+    basedir /var/monit  # set the base directory where events will be stored
+    slots 100           # optionally limit the queue size
 #
 #
 ## Send status and events to M/Monit (for more informations about M/Monit 
@@ -104,7 +106,7 @@ set logfile /var/log/monit.log
 ## service defined in this file has errors. Alerts may be restricted on 
 ## events by using a filter as in the second example below. 
 #
-# set alert sysadm@foo.bar                       # receive all alerts
+set alert {{monit_mail_alert_default}}           # receive all alerts
 # set alert manager@foo.bar only on { timeout }  # receive just service-
 #                                                # timeout alert
 #
@@ -128,14 +130,8 @@ set httpd port 2812 and
 ## usage. Each test specifies a resource, conditions and the action to be
 ## performed should a test fail.
 #
-#  check system myhost.mydomain.tld
-#    if loadavg (1min) > 4 then alert
-#    if loadavg (5min) > 2 then alert
-#    if memory usage > 75% then alert
-#    if swap usage > 25% then alert
-#    if cpu usage (user) > 70% then alert
-#    if cpu usage (system) > 30% then alert
-#    if cpu usage (wait) > 20% then alert
+check system {{inventory_hostname}}
+    if loadavg (5min) > 2.5 for 5 cycles then alert
 #
 #    
 ## Check if a file exists, checksum, permissions, uid and gid. In addition
