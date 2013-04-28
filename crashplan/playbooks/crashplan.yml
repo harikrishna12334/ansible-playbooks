@@ -19,3 +19,6 @@
 
     - service: name=crashplan state=started
     - action: command systemctl enable crashplan
+
+    # logs
+    - template: src=../files/cron-crashplan.sh dest=/etc/cron.hourly/crashplan mode=0755
