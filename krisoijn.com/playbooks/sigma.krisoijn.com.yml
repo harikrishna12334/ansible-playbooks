@@ -1,7 +1,3 @@
-- include: base.yml
-- include: lamp.yml
-- include: web.yml
-
 - hosts: [sigma.krisoijn.com]
 
   tasks:
@@ -23,6 +19,11 @@
     - user: name=krisoijn state=present shell=/bin/bash groups=http
 
     - authorized_key: user=krisoijn key='$FILE(~/.ssh/id_rsa.pub)'
+
+    # public autoindex
+    - template: src=../files/autoindex/$item dest=/home/public/$item
+      with_items:
+        - README.html
 
   handlers:
     - include: ../../apache/handlers/apache.yml
