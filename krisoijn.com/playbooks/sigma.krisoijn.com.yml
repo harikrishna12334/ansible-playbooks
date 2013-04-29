@@ -12,13 +12,17 @@
       with_items:
         - krisoijn
 
-    - file: path=/home/public owner=root group=root state=directory mode=0775
+    - file: path=/home/public owner=http group=http state=directory mode=0775
 
     - include: ../../apache/tasks/lif.yml line="Include conf/extra/httpd-public.conf"
 
     - template: src=../files/httpd-public.conf dest=/etc/httpd/conf/extra/httpd-public.conf
       notify: restart apache
       tags: [ httpd.conf ]
+
+    - user: name=krisoijn state=present shell=/bin/bash groups=http
+
+    - authorized_key: user=krisoijn key='$FILE(~/.ssh/id_rsa.pub)'
 
   handlers:
     - include: ../../apache/handlers/apache.yml

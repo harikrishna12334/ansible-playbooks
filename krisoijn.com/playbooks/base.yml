@@ -8,3 +8,4 @@
 - include: ../../sudo/playbooks/sudo.yml
 - include: ../../systemd/playbooks/systemd.yml
 - include: ../../ufw/playbooks/ufw.yml
+- include: ../../zsh/playbooks/zsh.yml
