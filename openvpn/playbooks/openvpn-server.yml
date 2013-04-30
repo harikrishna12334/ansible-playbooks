@@ -19,6 +19,17 @@
     - template: src=../files/$item dest=/etc/openvpn/$item
       with_items:
         - server.conf
+      notify:
+        - restart openvpn-server
 
     - action: command systemctl enable openvpn@server
     - service: name=openvpn@server state=started
+
+    # routing
+    - sysctl: name=net.ipv4.ip_forward value=1
+    - command: ip link set dev eth0 promisc on
+    - cron: name="eth0 promisc on" reboot=yes job="ip link set dev eth0 promisc on"
+
+  handlers:
+    - name: restart openvpn-server
+      action: command systemctl restart openvpn@server

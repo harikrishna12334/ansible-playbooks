@@ -6,6 +6,9 @@
     - template: src=../files/ufw-setup dest=/usr/local/bin/ufw-setup mode=755
       notify: ufw-setup
 
+    - template: src=../files/ufw-default dest=/etc/default/ufw
+      notify: ufw-setup
+
   handlers:
     - name: ufw-setup
       action: command /usr/local/bin/ufw-setup
