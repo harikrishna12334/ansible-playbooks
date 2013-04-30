@@ -1,0 +1,24 @@
+- hosts: [openvpn-server, test]
+
+  tasks:
+    - pacman: name=openvpn state=installed
+
+    - file: path=/etc/openvpn/keys owner=root group=root state=directory mode=0700
+
+    - template: src=${openvpn_keys_dir}/$item dest=/etc/openvpn/keys/$item
+      with_items:
+        - ca.crt
+
+    - template: src=${openvpn_keys_dir}/$item dest=/etc/openvpn/keys/$item
+      with_items:
+        - server.crt
+        - server.key
+        - dh2048.pem
+        - ta.key
+
+    - template: src=../files/$item dest=/etc/openvpn/$item
+      with_items:
+        - server.conf
+
+    - action: command systemctl enable openvpn@server
+    - service: name=openvpn@server state=started

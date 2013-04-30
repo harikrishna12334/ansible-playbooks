@@ -10,6 +10,8 @@ ufw allow 22
 ufw allow 80
 ufw allow 443
 
+ufw allow 1194
+
 for port in {6881..6891}; do
     ufw allow $port
 done
