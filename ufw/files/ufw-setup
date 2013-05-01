@@ -10,7 +10,11 @@ ufw allow 22
 ufw allow 80
 ufw allow 443
 
+# openvpn
 ufw allow 1194
+
+# crashplan
+ufw allow 4242
 
 for port in {6881..6891}; do
     ufw allow $port

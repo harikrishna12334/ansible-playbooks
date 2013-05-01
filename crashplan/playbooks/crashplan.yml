@@ -22,3 +22,12 @@
 
     # logs
     - template: src=../files/cron-crashplan.sh dest=/etc/cron.hourly/crashplan mode=0755
+
+    - file: path=/home/backups/crashplan state=directory owner=root group=root mode=0700
+
+    - wait_for: port=4242 delay=3 timeout=60
+    - include: ../tasks/my.service.xml.yml
+
+  handlers:
+    - name: restart crashplan
+      action: command systemctl restart crashplan

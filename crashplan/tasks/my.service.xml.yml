@@ -1,0 +1,5 @@
+- lineinfile: dest=/opt/CrashPlan-install/conf/my.service.xml
+              regexp="<manifestPath>.*</manifestPath>"
+              line="<manifestPath>/home/backups/crashplan/</manifestPath>"
+              state=present
+  notify: restart crashplan
