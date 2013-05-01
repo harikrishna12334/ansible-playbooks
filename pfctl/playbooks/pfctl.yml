@@ -1,0 +1,34 @@
+- hosts: [pfctl, osx, test]
+
+  vars:
+    pfctl_cmd: /sbin/pfctl -F all -f /etc/pf.conf -e
+    pfctl_log_cmd: /sbin/ifconfig pflog0 create; /usr/sbin/tcpdump -nettti pflog0 >> /var/log/pf.log &
+
+  tasks:
+    # disable ALF
+    - command: defaults write /Library/Preferences/com.apple.alf globalstate -int 0
+    - command: launchctl unload -w $item
+      with_items:
+        - /System/Library/LaunchAgents/com.apple.alf.useragent.plist
+        - /System/Library/LaunchDaemons/com.apple.alf.agent.plist
+
+    # enable pfctl
+    - template: src=$item dest=/etc/pf.anchors/pf.rules
+      first_available_file:
+        - ../../../files/pfctl/pf.rules
+        - ../files/pf.rules
+
+    - lineinfile: dest=/etc/pf.conf
+                  regexp="^${item}$"
+                  line="${item}"
+                  state=present
+      with_items:
+        - "anchor 'pf.rules'"
+        - "load anchor 'pf.rules' from '/etc/pf.anchors/pf.rules'"
+
+    # syntax check
+    - command: pfctl -f /etc/pf.conf -n
+    # No ALTQ support in kernel
+    - shell: ${pfctl_cmd}; exit 0
+
+    - cron: name="start pfctl" reboot=yes job="${pfctl_cmd}; ${pfctl_log_cmd}"
