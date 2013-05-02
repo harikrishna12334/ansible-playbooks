@@ -16,6 +16,7 @@
       with_items:
         - /etc/httpd/conf/ssl
         - /srv/http/$inventory_hostname
+        - /var/run/httpd
         - /var/log/httpd/$inventory_hostname
 
     - template: src=$item dest=/etc/httpd/conf/htpasswd
@@ -49,6 +50,8 @@
     - include: ../../common/tasks/service.yml name=$item state=started
       with_items:
         - ${httpd.${ansible_system}}
+
+    - cron: name="mkdir /var/run/httpd" reboot=yes job="test -d /var/run/httpd || mkdir /var/run/httpd"
 
   handlers:
     - include: ../../common/handlers/restart.yml name=$item
