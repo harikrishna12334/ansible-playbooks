@@ -1,2 +1,3 @@
+# to be removed
 - name: restart apache
   action: command systemctl reload httpd

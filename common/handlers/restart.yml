@@ -1,0 +1,8 @@
+- name: restart service
+  command: systemctl restart $name
+  only_if: "'$ansible_system' == 'Linux'"
+
+- name: restart service
+  command: launchctl unload -w /System/Library/LaunchDaemons/$name.plist
+  command: launchctl load -w /System/Library/LaunchDaemons/$name.plist
+  only_if: "'$ansible_system' == 'Darwin'"

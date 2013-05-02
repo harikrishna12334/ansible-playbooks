@@ -3,10 +3,16 @@
   vars:
     pf: ../../../files # private files
 
-  tasks:
-    - pacman: name=apache state=installed
+    httpd:
+      Linux: httpd
+      Darwin: org.apache.httpd
 
-    - file: path=$item state=directory owner=http group=http mode=0700
+  tasks:
+    - include: ../../common/tasks/package.yml name=$item state=installed
+      with_items:
+        - apache
+
+    - file: path=$item state=directory owner=${apache_User} group=${apache_Group} mode=0700
       with_items:
         - /etc/httpd/conf/ssl
         - /srv/http/$inventory_hostname
@@ -37,11 +43,14 @@
         - httpd.conf
         - extra/httpd-ssl.conf
         - extra/httpd-autoindex.conf
-      notify: restart apache
+      notify: restart service
       tags: [ httpd.conf ]
 
-    - service: name=httpd state=started
-    - action: command systemctl enable httpd
+    - include: ../../common/tasks/service.yml name=$item state=started
+      with_items:
+        - ${httpd.${ansible_system}}
 
   handlers:
-    - include: ../handlers/apache.yml
+    - include: ../../common/handlers/restart.yml name=$item
+      with_items:
+        - ${httpd.${ansible_system}}

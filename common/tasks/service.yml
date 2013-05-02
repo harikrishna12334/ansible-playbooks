@@ -1,0 +1,15 @@
+- name: Start service $name (Linux)
+  shell: systemctl enable $name; systemctl start $name
+  only_if: "'$ansible_system' == 'Linux' and '$state' == 'started'"
+
+- name: Stop service $name (Linux)
+  shell: systemctl disable $name; systemctl stop $name
+  only_if: "'$ansible_system' == 'Linux' and '$state' == 'stopped'"
+
+- name: Start service $name (Darwin)
+  command: launchctl load -w /System/Library/LaunchDaemons/$name.plist
+  only_if: "'$ansible_system' == 'Darwin' and '$state' == 'started'"
+
+- name: Stop service $name (Darwin)
+  command: launchctl unload -w /System/Library/LaunchDaemons/$name.plist
+  only_if: "'$ansible_system' == 'Darwin' and '$state' == 'stopped'"

@@ -1,0 +1,2 @@
+- pacman: name=$name state=$state
+  only_if: "'$ansible_pkg_mgr' == 'pacman'"
