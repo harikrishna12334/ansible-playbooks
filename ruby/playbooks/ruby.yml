@@ -1,0 +1,11 @@
+- hosts: [ruby, test]
+
+  vars:
+    packages:
+      - ruby
+
+  tasks:
+    - include: ../../common/tasks/package.yml name=$item state=installed
+      with_items: $packages
+
+    - command: gem install --no-user-install facter

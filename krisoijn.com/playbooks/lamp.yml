@@ -1,3 +1,5 @@
-- include: ../../apache/playbooks/apache.yml
-- include: ../../mariadb/playbooks/mariadb.yml
-- include: ../../php/playbooks/php.yml
+- include: ../../$item/playbooks/$item.yml
+  with_items:
+    - apache
+    - mariadb
+    - php
