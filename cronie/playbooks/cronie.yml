@@ -1,4 +1,4 @@
-- hosts: [cronie, minimal, test]
+- hosts: [$hosts]
 
   tasks:
     - pacman: name=cronie state=installed

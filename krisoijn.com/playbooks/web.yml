@@ -1,4 +1,4 @@
-- include: ../../$item/playbooks/$item.yml
+- include: ../../$item/playbooks/$item.yml hosts=web
   with_items:
     - crashplan
     - deluge

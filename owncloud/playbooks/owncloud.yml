@@ -1,9 +1,17 @@
-- hosts: [owncloud]
+- hosts: [$hosts]
 
   vars:
+    is_set:
+      - mysql_owncloud_password
+      - owncloud_adminlogin
+      - owncloud_adminpass
+
+    owncloud_version: v5.0.5
     owncloud_doc_root: /home/owncloud
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - pacman: name=$item state=installed
       with_items:
         - php-gd

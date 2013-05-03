@@ -1,4 +1,4 @@
-- include: ../../$item/playbooks/$item.yml
+- include: ../../$item/playbooks/$item.yml hosts=base
   with_items:
     - pacman
     - cronie

@@ -1,6 +1,7 @@
-- hosts: [vnstat]
+- hosts: [$hosts]
 
   vars:
+    vnstat_php_frontend_version: version-1.5.1
     vnstat_doc_root: /srv/http/$inventory_hostname/vnstat
 
   tasks:

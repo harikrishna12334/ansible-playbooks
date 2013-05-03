@@ -1,6 +1,12 @@
-- hosts: [mariadb, lamp]
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - mysql_root_password
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - pacman: name=$item state=installed
       with_items:
         - mariadb

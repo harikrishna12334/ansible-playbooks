@@ -1,6 +1,14 @@
-- hosts: [deluge]
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - deluge_pwd_salt
+      - deluge_pwd_sha1
+      - deluge_localclient_password
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - user: name=deluge state=present home=/home/deluge shell=/bin/bash
 
     - pacman: name=$item state=installed

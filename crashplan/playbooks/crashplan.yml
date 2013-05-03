@@ -1,4 +1,7 @@
-- hosts: [crashplan]
+- hosts: [$hosts]
+
+  vars:
+    crashplan_version: 3.5.3
 
   tasks:
     - pacman: name=$item state=installed

@@ -1,4 +1,4 @@
-- hosts: [apache, lamp, test]
+- hosts: [$hosts]
 
   vars:
     is_set:

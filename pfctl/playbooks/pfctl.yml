@@ -1,4 +1,4 @@
-- hosts: [pfctl, osx, test]
+- hosts: [$hosts]
 
   vars:
     pfctl_cmd: /sbin/pfctl -F all -f /etc/pf.conf -e

@@ -1,6 +1,16 @@
-- hosts: [monit, test]
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - monit_user # webui
+      - monit_password
+      - monit_mail_user
+      - monit_mail_password
+      - monit_mail_alert_default # mail address
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - pacman: name=monit state=installed
 
     - service: name=monit state=started

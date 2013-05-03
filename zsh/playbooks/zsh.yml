@@ -1,4 +1,4 @@
-- hosts: [zsh, minimal, test]
+- hosts: [$hosts]
 
   tasks:
     - pacman: name=zsh state=installed

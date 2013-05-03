@@ -1,6 +1,13 @@
-- hosts: [sigma.krisoijn.com]
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - ga_Account
+      - ga_DomainName
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - command: ln -sf /opt/CrashPlan-install/log /home/owncloud/data/krisoijn/files/crashplan-log
                creates=/home/owncloud/data/krisoijn/files/crashplan-log
 

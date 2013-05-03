@@ -1,9 +1,16 @@
-- hosts: [lwt]
+- hosts: [$hosts]
 
   vars:
+    is_set:
+      - mysql_lwt_password
+
+    # 1.4.10
+    lwt_version: b4a9d2949f99b6ecbb246ba330a01d329daa973b
     lwt_doc_root: /srv/http/$inventory_hostname/lwt
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - git: repo=https://github.com/lwt-project/lwt.git dest=$lwt_doc_root version=$lwt_version
 
     - template: src=../files/connect.inc.php dest=$lwt_doc_root/connect.inc.php

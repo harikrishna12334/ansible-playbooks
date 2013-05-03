@@ -1,4 +1,4 @@
-- hosts: [ufw, minimal, test]
+- hosts: [$hosts]
 
   tasks:
     - pacman: name=ufw state=installed

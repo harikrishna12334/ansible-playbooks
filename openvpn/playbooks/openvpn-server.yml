@@ -1,6 +1,13 @@
-- hosts: [openvpn-server, test]
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - openvpn_dns
+      - openvpn_keys_dir
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - pacman: name=openvpn state=installed
 
     - file: path=/etc/openvpn/keys owner=root group=root state=directory mode=0700

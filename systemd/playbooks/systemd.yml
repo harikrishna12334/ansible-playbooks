@@ -1,4 +1,4 @@
-- hosts: [systemd, minimal, test]
+- hosts: [$hosts]
 
   tasks:
     - pacman: name=systemd state=installed

@@ -1,6 +1,14 @@
-- hosts: [msmtp, minimal, test]
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - msmtp_user
+      - msmtp_password
+      - mailto_default
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - pacman: name=$item state=installed
       with_items:
         - msmtp

@@ -1,4 +1,4 @@
-- hosts: [ruby, test]
+- hosts: [$hosts]
 
   vars:
     packages:

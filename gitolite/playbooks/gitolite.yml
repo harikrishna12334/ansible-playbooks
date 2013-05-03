@@ -1,4 +1,7 @@
-- hosts: [gitolite]
+- hosts: [$hosts]
+
+  vars:
+    gitolite_version: v3.04
 
   tasks:
     - git: repo=https://github.com/sitaramc/gitolite.git dest=/home/git/gitolite version=$gitolite_version

@@ -1,4 +1,4 @@
-- hosts: [php, lamp, test]
+- hosts: [$hosts]
 
   tasks:
     - pacman: name=$item state=installed

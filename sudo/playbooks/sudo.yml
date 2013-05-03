@@ -1,6 +1,12 @@
-- hosts: [sudo, minimal, test]
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - sudo_ADMINS
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - pacman: name=sudo state=installed
 
     - template: src=../files/sudoers dest=/etc/sudoers owner=root mode=0440

@@ -1,4 +1,4 @@
-- include: ../../$item/playbooks/$item.yml
+- include: ../../$item/playbooks/$item.yml hosts=lamp
   with_items:
     - apache
     - mariadb

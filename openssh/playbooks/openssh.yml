@@ -1,6 +1,12 @@
-- hosts: [openssh, minimal, test]
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - sshd_AllowUsers
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - pacman: name=openssh state=installed
 
     - service: name=sshd state=started

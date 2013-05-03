@@ -1,4 +1,4 @@
-- hosts: [git]
+- hosts: [$hosts]
 
   tasks:
     - pacman: name=git state=installed

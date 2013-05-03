@@ -1,6 +1,12 @@
-- hosts: [pacman, archlinux, test]
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - country
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
+
     - template: src=../files/pacman.conf dest=/etc/pacman.conf
     - template: src=../files/mirrorlist dest=/etc/pacman.d/mirrorlist
 
