@@ -1,0 +1,3 @@
+- debug: msg=">>> ${item} is NULL <<<" fail=yes
+  only_if: "is_unset('${${item}}')"
+  with_items: $is_set

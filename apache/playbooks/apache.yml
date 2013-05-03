@@ -1,13 +1,18 @@
 - hosts: [apache, lamp, test]
 
   vars:
-    pf: ../../../files # private files
+    is_set:
+      - pf # path to private files dir
+      - apache_User
+      - apache_Group
+      - apache_ServerAdmin
 
     httpd:
       Linux: httpd
       Darwin: org.apache.httpd
 
   tasks:
+    - include: ../../common/tasks/is_set.yml
     - include: ../../common/tasks/package.yml name=$item state=installed
       with_items:
         - apache
