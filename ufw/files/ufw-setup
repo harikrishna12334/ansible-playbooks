@@ -12,9 +12,13 @@ ufw allow 443
 
 # openvpn
 ufw allow 1194
+ufw allow from 10.8.0.0/24
 
 # crashplan
 ufw allow 4242
+
+# btsync
+ufw allow {{btsync_listening_port}}
 
 for port in {6881..6891}; do
     ufw allow $port
