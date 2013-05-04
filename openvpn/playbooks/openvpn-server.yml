@@ -3,6 +3,7 @@
   vars:
     is_set:
       - openvpn_dns
+      - openvpn_subnet
       - openvpn_keys_dir
 
   tasks:
