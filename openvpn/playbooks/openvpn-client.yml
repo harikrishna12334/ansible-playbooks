@@ -1,0 +1,42 @@
+- hosts: [$hosts]
+
+  vars:
+    is_set:
+      - openvpn_server
+      - openvpn_keys_dir
+
+  tasks:
+    - include: ../../common/tasks/is_set.yml
+
+    - pacman: name=openvpn state=installed
+
+    - file: path=/etc/openvpn/keys owner=root group=root state=directory mode=0700
+
+    - template: src=${openvpn_keys_dir}/$item dest=/etc/openvpn/keys/$item
+      with_items:
+        - ca.crt
+        - ta.key
+
+    - template: src=$item dest=/etc/openvpn/keys/client.crt
+      first_available_file:
+        - ${openvpn_keys_dir}/$inventory_hostname.crt
+        - ${openvpn_keys_dir}/default.crt
+
+    - template: src=$item dest=/etc/openvpn/keys/client.key
+      first_available_file:
+        - ${openvpn_keys_dir}/$inventory_hostname.key
+        - ${openvpn_keys_dir}/default.key
+
+    - template: src=../files/$item dest=/etc/openvpn/$item
+      with_items:
+        - client.conf
+      notify: restart service
+
+    - include: ../../common/tasks/service.yml name=$item state=started
+      with_items:
+        - openvpn@client
+
+  handlers:
+    - include: ../../common/handlers/restart.yml name=$item
+      with_items:
+        - openvpn@client
