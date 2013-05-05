@@ -2,7 +2,7 @@
 
   vars:
     vnstat_php_frontend_version: version-1.5.1
-    vnstat_doc_root: /srv/http/$inventory_hostname/vnstat
+    vnstat_doc_root: /usr/share/webapps/vnstat
 
   tasks:
     - pacman: name=vnstat state=installed
