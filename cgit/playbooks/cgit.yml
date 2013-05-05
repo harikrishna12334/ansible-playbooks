@@ -1,0 +1,24 @@
+- hosts: [$hosts]
+
+  vars:
+    cgit_version: v0.9.1
+
+  tasks:
+    - include: ../../common/tasks/package.yml name=$item state=installed
+      with_items:
+        - cgit
+
+    - template: src=../files/cgitrc dest=/etc/cgitrc
+
+    - include: ../../apache/tasks/lif.yml line="Include conf/extra/httpd-cgit.conf"
+
+    - template: src=../files/httpd-cgit.conf dest=/etc/httpd/conf/extra/httpd-cgit.conf
+      notify: restart service
+      tags: [ httpd.conf ]
+
+  handlers:
+    - include: ../../apache/handlers/apache.yml
+
+    - include: ../../common/handlers/restart.yml name=$item
+      with_items:
+        - httpd

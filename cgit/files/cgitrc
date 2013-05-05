@@ -1,0 +1,5 @@
+css=/cgit-css/cgit.css
+logo=/cgit-css/cgit.png
+
+project-list=/home/git/projects.list
+scan-path=/home/git/repositories
