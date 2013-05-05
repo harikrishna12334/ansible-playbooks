@@ -1,0 +1,25 @@
+- hosts: [$hosts]
+
+  tasks:
+    - include: ../../common/tasks/package.yml name=$item state=installed
+      with_items:
+        - python2
+        - python2-pip
+
+    - shell: pip2 install flexget
+
+    - file: path=$item owner=deluge group=deluge state=directory mode=0755
+      with_items:
+        - /home/deluge
+        - /home/deluge/.flexget
+        - /home/flexget
+        - /home/flexget/tmp
+        - /home/flexget/done
+
+    - template: src=../../../files/flexget/$item dest=/home/deluge/.flexget/$item owner=deluge group=deluge mode=0750
+      with_items:
+        - config.yml
+        - tv.yml
+        - music.yml
+
+    - cron: name="flexget --cron" minute=0 job="su - deluge -s /bin/bash -c '/usr/bin/flexget --cron'"
